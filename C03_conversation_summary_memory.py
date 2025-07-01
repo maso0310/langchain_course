@@ -24,8 +24,8 @@ conversation = ConversationChain(
 )
 
 # 🗣️ 模擬對話：進行三輪問答
-conversation.predict(input="你好，可以幫我規劃一下台南三日旅遊行程嗎？")
-conversation.predict(input="我想要第二天去關子嶺泡溫泉，這樣安排合理嗎？")
-response = conversation.predict(input="幫我簡單總結一下目前的行程規劃")
+conversation.invoke(input="你好，可以幫我規劃一下台南三日旅遊行程嗎？")
+conversation.invoke(input="我想要第二天去關子嶺泡溫泉，這樣安排合理嗎？")
+response = conversation.invoke(input="幫我簡單總結一下目前的行程規劃")
 
 print("總結回應：", response)

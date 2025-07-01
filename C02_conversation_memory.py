@@ -25,8 +25,8 @@ conversation = ConversationChain(
 )
 
 # 🗣️ 執行兩輪問答
-response1 = conversation.predict(input="請問你是誰？")
+response1 = conversation.invoke(input="請問你是誰？")
 print("第一輪回應：", response1)
 
-response2 = conversation.predict(input="你剛剛說你是 AI，那你能做什麼？")
+response2 = conversation.invoke(input="你剛剛說你是 AI，那你能做什麼？")
 print("第二輪回應：", response2)
