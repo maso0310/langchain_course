@@ -27,7 +27,7 @@ prompt = ChatPromptTemplate.from_messages([
 final_prompt = prompt.partial(format_instructions=format_instructions)
 
 # 將使用者查詢代入 Prompt，生成完整提示內容
-query = "我對利用物聯網、無人機、網路應用程式開發與AI資料分析技術應用於農業發展有興趣，想知道未來可以往哪些職涯方向發展"
+query = "我對利用物聯網、無人機、網路應用程式開發與AI資料分析技術應用於農業發展有興趣"
 formatted_prompt = final_prompt.invoke({"query": query})
 
 # # 建立 LangChain 流程鏈：Prompt → 模型 → 輸出解析
