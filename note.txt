@@ -1,2 +1,2 @@
 今天學習 LangChain 的 Tool 機制
-之後可以試著整合 LINE Bot 和 Notion API 做自動筆記整理
+加上一句：未來可以整合 LINE Bot 和 Notion API 做自動筆記整理
