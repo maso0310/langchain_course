@@ -2,3 +2,4 @@ chromadb
 langchain-core
 langchain-ollama
 langchain-community
+pandas
