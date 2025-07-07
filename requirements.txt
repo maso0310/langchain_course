@@ -1,5 +1,8 @@
-chromadb
-langchain-core
-langchain-ollama
-langchain-community
-pandas
+chromadb==1.0.15
+langchain==0.3.26
+langchain-core==0.3.68
+langchain-ollama==0.3.3
+langchain-community==0.3.27
+pandas==2.3.0
+transformers==4.53.1
+torch
