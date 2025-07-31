@@ -1,30 +1,34 @@
-# LangChain + Ollama 本地模型實戰範例
+# LangChain x Ollama 繁體中文實戰範例
 
-本專案收錄了一系列 LangChain 的實用範例，旨在展示如何結合本地大型語言模型（透過 Ollama 執行 `gemma`）來建構多樣化的 AI 應用。每個範例都專注於一個特定的 LangChain核心功能。
+本專案包含一系列使用 LangChain 框架與 Ollama 本地大型語言模型（LLM）的 Python 實作範例。每個範例都專注於一個特定的 LangChain 功能，從基礎的處理鏈（Chain）到複雜的智慧代理人（Agent）應用。
 
-## 🚀 環境設定
+## 環境設定
 
-在執行任何範例之前，請先完成以下設定：
+1.  **安裝 Ollama**：請先至 Ollama 官網 下載並安裝對應您作業系統的程式。
 
-### 1. 安裝 Ollama 並下載模型
+2.  **下載模型**：本專案主要使用以下幾個模型，請透過終端機執行指令下載：
+    ```bash
+    # 主要的語言模型
+    ollama pull gemma3
+    ollama pull llama3
+    ollama pull mistral
 
-請先參考 Ollama 官方網站 的說明進行安裝。安裝完成後，執行以下指令下載本專案使用的模型：
+    # 用於文字嵌入（Embedding）的模型
+    ollama pull nomic-embed-text
+    ```
 
-```bash
-ollama pull gemma3
-```
+3.  **安裝 Python 套件**：
+    ```bash
+    pip install langchain langchain-community langchain-core langchain-text-splitters langchain-ollama chromadb pydantic pymupdf duckduckgo-search requests
+    ```
 
-### 2. 安裝 Python 依賴套件
+4.  **準備參考文件**：部分範例會讀取本地文件，請在專案根目錄下建立對應檔案：
+    *   `reference.txt`：用於 `C07` 和 `C08`，請填入任意中文文字內容。
+    *   `Hakka.pdf`：用於 `C19`，請準備一份 PDF 檔案。
 
-建議建立一個虛擬環境，並透過 `pip` 安裝所有必要的套件：
+---
 
-```bash
-pip install langchain langchain-community langchain-core langchain-ollama ollama chromadb pydantic
-```
-
-## 📂 範例程式碼說明
-
-以下是各個範例檔案的詳細說明：
+## 範例總覽
 
 | 檔案名稱                               | 主要功能與展示概念                                                                                                                             |
 | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -37,21 +41,21 @@ pip install langchain langchain-community langchain-core langchain-ollama ollama
 | `C07_rag_doc_qa.py`                    | **RAG 文件問答系統**：展示如何建構一個完整的 RAG 流程。從讀取本地文件、切割、向量化（使用 ChromaDB），到建立一個能根據文件內容回答問題的 QA 鏈。 |
 | `C08_rag_tool_agent.py`                | **RAG + Agent 整合應用**：將 RAG 問答系統包裝成一個 Tool，再與其他工具（如計算機）一起交給 Agent 管理。Agent 會根據問題的性質，決定是查詢文件還是進行計算。 |
 | `C09_career_assistant.py`              | **結構化輸出**：介紹如何使用 `PydanticOutputParser`，強制模型回傳符合特定 JSON 格式的結構化資料，非常適合需要穩定資料格式的應用。     |
-| `C10_movie_information.py`             | **平行處理鏈**：學習使用 `RunnableParallel`，讓多個獨立的查詢鏈可以同時執行，最後將結果合併，提高效率。                               |
+| `C10_movie_information.py`             | **平行處理鏈**：學習使用 `RunnableParallel`，讓多個獨立的查詢鏈可以同時執行，最後將結果合併，提高效率。                                 |
+| `C11_attrgetter_and_itemgetter.py`     | **LCEL 資料流操作**：展示如何使用 `itemgetter` 和 `attrgetter` 在處理鏈中精準地擷取與傳遞特定資料，優化複雜的資料流。                   |
+| `C12_lambda_and_branch_in_LCEL.py`     | **LCEL 條件分支**：學習使用 `RunnableLambda` 進行任務分類，並透過 `RunnableBranch` 根據分類結果將請求導向不同的處理鏈。                 |
+| `C13_configurable_alternatives.py`     | **動態配置處理鏈**：展示如何使用 `with_config` 在執行時動態切換不同的 Prompt 或 LLM 模型，增加處理鏈的彈性。                           |
+| `C14_conversation_RunnableWithMessageHistory.py` | **新式對話記憶**：介紹 `RunnableWithMessageHistory`，這是 LCEL 中管理對話歷史的現代化方法，提供更好的整合性與彈性。                 |
+| `C15_conversation_history_to_db.py`    | **對話紀錄存入資料庫**：將聊天歷史儲存於 SQLite 資料庫，並結合摘要記憶，實現可長期保存且高效的對話機器人。                             |
+| `C16_chain_stream.py`                  | **串流輸出**：展示如何讓 LLM 的回應以串流（Stream）方式逐字輸出，即時顯示結果，大幅提升使用者體驗。                                   |
+| `C17_web_search_with_langchain.py`     | **Agent 網路搜尋**：整合 `DuckDuckGo` 搜尋工具，讓 Agent 能夠上網查詢即時資訊，回答訓練資料中沒有的時事問題。                         |
+| `C18_weather_API.py`                   | **Agent 串接 API**：使用 `StructuredTool` 建立一個能呼叫外部天氣 API 的工具，讓 Agent 能夠獲取並整理結構化的即時數據。                 |
+| `C19_PDF_loader.py`                    | **PDF 文件問答**：展示如何使用 `PyMuPDFLoader` 載入並處理 PDF 檔案，並建立一個針對 PDF 內容的 RAG 問答系統。                         |
 
-## ▶️ 如何執行
-
-1.  請確認已完成上述的 **環境設定**。
-2.  `C07` 和 `C08` 範例需要一個名為 `reference.txt` 的參考文件在同一個目錄下。
-3.  `C06` 範例會在本機建立、讀取、修改 `note.txt` 檔案。
-4.  在終端機中，使用 `python` 指令執行您想測試的檔案：
 
 ```bash
 # 執行快速入門範例
 python C01_quick_start.py
-
-# 執行 RAG 文件問答範例
-python C07_rag_doc_qa.py
 ```
 
 ## 💡 核心概念總結

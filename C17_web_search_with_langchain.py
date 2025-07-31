@@ -36,4 +36,4 @@ agent = initialize_agent(
 # ✅ 測試提問
 question = "台灣 2025 年金曲獎獲獎人？請將所有的獎項與獲獎人整理成表格"
 response = agent.run(question)
-print(f"\n🤖 AI 回應：{response}")
+print(f"\n🤖 AI 回應：\n{response}")
