@@ -53,8 +53,8 @@
 | `C19_PDF_loader.py`                    | **PDF 文件問答**：展示如何使用 `PyMuPDFLoader` 載入並處理 PDF 檔案，並建立一個針對 PDF 內容的 RAG 問答系統。                         |
 
 
+## 執行快速入門範例
 ```bash
-# 執行快速入門範例
 python C01_quick_start.py
 ```
 
@@ -62,12 +62,33 @@ python C01_quick_start.py
 
 本專案涵蓋了 LangChain 的多個核心模組與設計模式：
 
--   **Models (LLMs & Embeddings)**: 串接 Ollama 本地模型作為語言模型與嵌入模型。
--   **Prompts**: 使用 `PromptTemplate` 和 `ChatPromptTemplate` 進行結構化的提示詞工程。
--   **Chains (LCEL)**: 透過 LangChain Expression Language (LCEL) 的 `|` 語法，彈性地組合各種元件。
--   **Memory**: 利用 `ConversationBufferMemory` 和 `ConversationSummaryMemory` 讓對話具有上下文記憶。
--   **Retrieval-Augmented Generation (RAG)**: 結合外部文件（`reference.txt`）與向量資料庫（`Chroma`），讓模型能回答其訓練資料中沒有的特定知識。
--   **Agents & Tools**: 賦予 LLM 使用外部工具（如計算機、檔案系統、RAG系統）的能力，使其能完成更複雜的任務。
--   **Output Parsers**: 使用 `StrOutputParser` 和 `PydanticOutputParser` 來解析模型的輸出，使其成為純文字或結構化的資料格式。
--   **Runnables**: 運用 `RunnableParallel` 等元件來平行化處理任務，提升執行效率。
+-   **模型 (Models)**: 串接 Ollama 本地模型 (`Ollama`, `ChatOllama`) 作為語言模型與嵌入模型 (`OllamaEmbeddings`)。
 
+-   **提示詞 (Prompts)**: 使用 `PromptTemplate` 和 `ChatPromptTemplate` 進行結構化的提示詞工程，並利用 `MessagesPlaceholder` 管理對話歷史。
+
+-   **鏈 (Chains) 與 LCEL**:
+    -   透過 LangChain 表達式語言 (LCEL) 的 `|` 語法，彈性地組合各種元件。
+    -   使用 `RunnableParallel` 平行化處理任務，提升執行效率。
+    -   利用 `RunnableBranch` 和 `RunnableLambda` 實現鏈內的條件分支與自訂邏輯。
+    -   透過 `with_config` 在執行時動態切換模型或提示詞，增加應用彈性。
+
+-   **記憶 (Memory)**:
+    -   利用 `ConversationBufferMemory` 進行標準對話記憶，並透過 `ConversationSummaryMemory` 自動總結長篇對話以節省 Token。
+    -   透過 `RunnableWithMessageHistory` 與 `SQLChatMessageHistory` 實現更現代化、可永久保存於資料庫的對話管理。
+
+-   **檢索增強生成 (RAG)**:
+    -   結合外部文件（如 `.txt`, `.pdf`）與向量資料庫（`Chroma`）來回答特定領域知識。
+    -   展示文件載入 (`TextLoader`, `PyMuPDFLoader`)、切割 (`RecursiveCharacterTextSplitter`)、向量化與檢索的完整流程。
+
+-   **代理人與工具 (Agents & Tools)**:
+    -   賦予 LLM 使用外部工具的能力，使其能完成更複雜的任務。
+    -   展示如何建立自訂工具 (`@tool`, `Tool`)、結構化工具 (`StructuredTool`)。
+    -   整合外部服務，如網路搜尋 (`DuckDuckGoSearchRun`) 和 API 呼叫。
+    -   將 RAG 問答系統包裝成一個工具，供 Agent 依情境調用。
+
+-   **輸出解析器 (Output Parsers)**:
+    -   使用 `StrOutputParser` 取得純文字輸出。
+    -   利用 `PydanticOutputParser` 強制模型回傳指定的 JSON 結構化資料。
+
+-   **串流 (Streaming)**:
+    -   展示如何透過 `.stream()` 方法，讓模型的回應以串流方式逐字輸出，提升使用者體驗。
